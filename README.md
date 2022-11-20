@@ -41,39 +41,96 @@ FIGURE-04
 A Parallel in Parallel out (PIPO) shift register is used as a temporary storage device and like SISO Shift register it acts as a delay element.
 
 ### Procedure
-/* write all the steps invloved */
-
-
+1. Create a new file in quartus II.
+2. Module Declaration. Module should have the file name.
+3. Use begin declaration to define the functionality of logic circuits.
+4. Within begin use if statements.
+5. At the end give endmodule.
+6. Run the program and choose RTL viewer to get RTL realization.
 
 ### PROGRAM 
+```
 /*
 Program for  Implementation-of Shift-registers-using-verilog-
-Developed by: 
-RegisterNumber:  
+Developed by: Bharath.V
+RegisterNumber: 212221230013
 */
-
-
-
-
-
+```
+### Parallel-In Parallel-Out(PIPO):
+```
+module ex9(PI,Clk,PO);
+input Clk;
+input [3:0] PI;
+output reg [3:0] PO;
+always @ (posedge Clk)
+begin
+PO=PI;
+end 
+endmodule 
+```
+### Serial-In Parallel-Out(SIPO):
+```
+module ex9(SI,Clk,Po);
+input SI,Clk;
+output [0:7]  Po;
+reg [0:7]temp;
+always @ (posedge Clk)
+begin
+temp={temp[0:6],SI};
+end
+assign Po=temp;
+endmodule 
+```
+### Parallel in Serial out(PISO):
+```
+module ex9(Clk, Parallel_In,load, Serial_Out);
+input Clk,load;
+input [3:0]Parallel_In;
+output reg Serial_Out;
+reg [3:0]tmp;
+always @(posedge Clk)
+begin
+if(load)
+tmp<=Parallel_In;
+else
+begin
+Serial_Out<=tmp[3];
+tmp<={tmp[2:0],1'b0};
+end
+end
+endmodule
+```
 
 ### RTL LOGIC  REGISTERS   
 
+### Parallel-In Parallel-Out(PIPO):
 
+![output](pipo_rtl.png)
 
+### Serial-In Parallel-Out(SIPO):
 
+![output](sipo_rtl.png)
 
+### Parallel in Serial out(PISO):
 
-
+![output](piso_rtl.png)
 
 
 ### TIMING DIGRAMS FOR SHIFT REGISTERS
 
+### Parallel-In Parallel-Out(PIPO):
 
+![output](pipo_td.png)
 
+### Serial-In Parallel-Out(SIPO):
 
+![output](sipo_td.png)
 
+### Parallel in Serial out(PISO):
 
+![output](piso_td.png)
 
 
 ### RESULTS 
+
+PISO , PIPO,PISO has been implemented using verilog and validated their functionality using their functional tables.
